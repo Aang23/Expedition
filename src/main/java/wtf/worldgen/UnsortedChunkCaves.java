@@ -2,12 +2,9 @@ package wtf.worldgen;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
-import wtf.Core;
 import wtf.utilities.wrappers.AdjPos;
 import wtf.utilities.wrappers.CaveListWrapper;
 import wtf.utilities.wrappers.CavePosition;
@@ -71,9 +68,9 @@ public class UnsortedChunkCaves {
 		//get any adjacent to that position, check that the Y value is reasonably close, and remove them from the unsorted list, and add them to the sorted
 		//repeat that, until there are no more adjacent
 
-		unsortedCavePos.entrySet().forEach(entry -> entry.getValue().forEach(cavepos -> {
+		unsortedCavePos.forEach((key, value) -> value.forEach(cavepos -> {
 			CaveListWrapper newcavelist = new CaveListWrapper(cavepos, coords);
-			addAllAdj(newcavelist, cavepos, entry.getKey());
+			addAllAdj(newcavelist, cavepos, key);
 			sortedCaveLists.add(newcavelist);
 		}));
 
