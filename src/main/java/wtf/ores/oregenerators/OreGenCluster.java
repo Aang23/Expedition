@@ -64,7 +64,7 @@ public class OreGenCluster extends OreGenAbstract {
 
 	}
 
-	private int genStarPosition(GeneratorMethods gen, World world, Random random, BlockPos pos, double surface) throws Exception {
+	private int genStarPosition(GeneratorMethods gen, World world, Random random, BlockPos pos, double surface) {
 		int densityToSet;
 		if (genDenseOres){
 			densityToSet = getDensityToSet(random, pos.getY(), surface);

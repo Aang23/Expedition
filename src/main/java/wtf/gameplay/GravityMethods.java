@@ -85,20 +85,15 @@ public class GravityMethods {
 				&& !fenceNear(world, pos.down(2), 1, 0);
 	}
 
-	public static boolean dropBlock(World world, BlockPos pos, Boolean checkSupport){
-
-
+	public static void dropBlock(World world, BlockPos pos, Boolean checkSupport){
 		if (BlockSets.fallingBlocks.containsKey(world.getBlockState(pos).getBlock())){
 
 			if (checkSupport && fenceNear(world, pos, 1, 1)){
-				return false;
+				return;
 			}
 
 			EntityFallingBlock entityfallingblock = new EntityWTFFallingBlock(world, pos, world.getBlockState(pos));
 			entityfallingblock.setHurtEntities(GameplayConfig.fallingBlocksDamage);
-			if (!world.isRemote && world.spawnEntity(entityfallingblock)){
-
-			}
 
 			if (checkSupport){
 				checkPos(world, pos.up());
@@ -106,9 +101,7 @@ public class GravityMethods {
 			else {
 				dropBlock(world, pos.up(), false);
 			}
-			return true;
 		}
-		return false;
 	}
 
 

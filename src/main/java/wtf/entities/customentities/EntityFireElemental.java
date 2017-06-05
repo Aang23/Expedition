@@ -33,7 +33,8 @@ public class EntityFireElemental extends EntityBlockHead implements IRangedAttac
 		this.isImmuneToFire = true;
 	}
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
 	protected void initEntityAI()
     {
         //this.tasks.addTask(1, new EntityAISwimming(this));

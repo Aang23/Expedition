@@ -7,7 +7,6 @@ import net.minecraftforge.common.config.Configuration;
 public class CaveBiomesConfig extends AbstractConfig{
 
 	public static float dungeonChance;
-	private static boolean logDungeons;
 	public static boolean enableMobDungeons;
 	public static boolean enableAmbientDungeons;
 
@@ -24,7 +23,6 @@ public class CaveBiomesConfig extends AbstractConfig{
 		String section1 = "Cave Subtype and Dungeon Generation";
 		
 		dungeonChance = config.get(section1, "Cave Subtype and Dungeon percent generation chance", 50).getInt()/100F;
-		logDungeons=config.get(section1, "Log subtypes in chat", false).getBoolean();
 		enableMobDungeons = config.get(section1, "Allow generation of custom mob based dungeons", true).getBoolean();
 		enableAmbientDungeons = config.get(section1, "Allow generation of cave subtypes", true).getBoolean();
 		

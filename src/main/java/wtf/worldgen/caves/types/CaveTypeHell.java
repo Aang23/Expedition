@@ -77,6 +77,7 @@ public class CaveTypeHell extends AbstractCaveType{
     public hellBiome getSubType(BlockPos pos){
 		
 		return hellBiome.NORMAL;
+
 		
 		/*
 		int temp = (int)getNoise(pos, 10, 0.05F);

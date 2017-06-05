@@ -17,7 +17,6 @@ public abstract class AbstractConfig {
 		try {
 			return BiomeDictionary.Type.getType(biomestring.toUpperCase());
 		} catch (IllegalArgumentException e){
-			String string = "";
 			throw new Exception("Ore Config Parsing Exception while trying to parse Biome Percent modifier : " + biomestring + ":  "  + "Unrecognised Forge BiomeDictionary BiomeType");
 		}
 	}

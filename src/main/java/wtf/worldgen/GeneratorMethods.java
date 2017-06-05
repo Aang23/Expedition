@@ -54,8 +54,8 @@ public class GeneratorMethods{
 	/**
 	 **Used to set a block, based on a modifier and the block at the given location
 	 **/
-	public boolean transformBlock(BlockPos pos, BlockSets.Modifier modifier){
-		return blockmap.add(pos, new QModify(modifier));
+	public void transformBlock(BlockPos pos, BlockSets.Modifier modifier){
+		blockmap.add(pos, new QModify(modifier));
 	}
 	/**
 	 **Used to replace a block.  Checks that the block is replaceable first
@@ -67,13 +67,13 @@ public class GeneratorMethods{
 	 **Used to replace a block without checking that the block is replaceable first
 	 **/
 	
-	public boolean overrideBlock(BlockPos pos, IBlockState state){
-		return blockmap.add(pos, new QReplaceNoCheck(state));
+	public void overrideBlock(BlockPos pos, IBlockState state){
+		blockmap.add(pos, new QReplaceNoCheck(state));
 	}
 	
 
-	public boolean setOreBlock(BlockPos pos, IBlockState oreState, int density){
-		return blockmap.add(pos, new QOreGen(oreState, density));
+	public void setOreBlock(BlockPos pos, IBlockState oreState, int density){
+		blockmap.add(pos, new QOreGen(oreState, density));
 	}
 
 	/**
@@ -116,14 +116,14 @@ public class GeneratorMethods{
 	}
 
 
-	public boolean genSpeleothem(BlockPos pos, int size, float depth, boolean frozen){
+	public void genSpeleothem(BlockPos pos, int size, float depth, boolean frozen){
 
-		if (blockmap.posQueued(pos.up()) || blockmap.posQueued(pos) || blockmap.posQueued(pos.down())){ 
-			return false;
+		if (blockmap.posQueued(pos.up()) || blockmap.posQueued(pos) || blockmap.posQueued(pos.down())){
+			return;
 		}
 		if (frozen && depth > 0.9){
 			genIcicle(pos);
-			return true;
+			return;
 		}
 
 		IBlockState above = getWorld().getBlockState(pos.up());
@@ -140,27 +140,27 @@ public class GeneratorMethods{
 			speleothem = WTFBlocks.speleothemMap.get(above);
 		}
 		else {
-			return false;
+			return;
 		}
 
 		if (speleothem == null){
 			if (direction == -1){
 				if (above.getBlock().hashCode() == Blocks.DIRT.hashCode() && depth > 0.7){
 					genRoot(pos);
-					return true;
+					return;
 				}
 				else if (frozen || above.getMaterial() == Material.ICE || above.getMaterial() == Material.PACKED_ICE){
 					genIcicle(pos);
-					return true;
+					return;
 				}
 				//hanging glow shrooms
 			}
 
-			return false;	
+			return;
 		}
 		
 		if (depth > 1){
-			return false;
+			return;
 		}
 
 		if (frozen){
@@ -182,7 +182,7 @@ public class GeneratorMethods{
                     }
                 }
                 else {
-                    return false;//cave size = 1, generate nothing
+					return;
                 }
             }
             else if (!nextQueued && i > 1){ //middle block
@@ -247,7 +247,6 @@ public class GeneratorMethods{
 			pos = pos.up(direction);
 			remaining --;
 		}*/
-		return true;
 	}
 
 
@@ -322,8 +321,8 @@ public class GeneratorMethods{
 		return getWorld().isAirBlock(pos) && !blockmap.posQueued(pos);
 	}
 
-	public boolean setTreeBlock(BlockPos pos, IBlockState state) {
-		return blockmap.add(pos, new QTreeReplace(pos, state));
+	public void setTreeBlock(BlockPos pos, IBlockState state) {
+		blockmap.add(pos, new QTreeReplace(pos, state));
 	}
 	
 }

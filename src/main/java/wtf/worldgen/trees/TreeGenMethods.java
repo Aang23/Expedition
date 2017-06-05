@@ -28,7 +28,7 @@ public class TreeGenMethods {
 	//private static final float PId2 = (float)Math.PI/2;
 	private static final float PId4 = (float)Math.PI/4;
 
-	public static boolean tryGenerate(TreeInstance tree, GeneratorMethods gen) throws Exception{
+	public static boolean tryGenerate(TreeInstance tree, GeneratorMethods gen) {
 
 		if (tree.chunkscan.checkGenerated(tree.pos, tree.type.genBuffer+tree.type.getBranchLength(tree.scale, tree.trunkHeight, tree.trunkHeight*tree.type.getLowestBranchRatio()))){
 			return false;
@@ -283,7 +283,7 @@ public class TreeGenMethods {
 	}	
 
 
-	protected static boolean genBranch(TreeInstance tree, Branch branch){
+	protected static void genBranch(TreeInstance tree, Branch branch){
 		while (tree.inTrunk(branch.pos())){
 			branch.next();
 		}
@@ -296,7 +296,7 @@ public class TreeGenMethods {
 		while (branch.hasNext()){
 
 			if (!canReplace(tree, pos)){
-				return false;
+				return;
 			}
 			
 			switch (tree.type.leaftype){
@@ -317,7 +317,7 @@ public class TreeGenMethods {
 		}
 
 		if (!canReplace(tree, pos)){
-			return false;
+			return;
 		}
 
 		switch (tree.type.leaftype){
@@ -334,7 +334,6 @@ public class TreeGenMethods {
 		}
 
 
-		return true;
 	}
 
 

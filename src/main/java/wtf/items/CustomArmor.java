@@ -9,11 +9,8 @@ import wtf.Core;
 
 public class CustomArmor extends ItemArmor{
 
-	private String texture;
-	
 	public CustomArmor(ArmorMaterial material, EntityEquipmentSlot armorType, String textureName) {
 		super(material, 0, armorType);
-		this.texture = textureName;	
 		this.setCreativeTab(Core.wtfTab);
 	}
 

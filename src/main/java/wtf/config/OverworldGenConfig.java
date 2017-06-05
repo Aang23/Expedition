@@ -31,8 +31,6 @@ public class OverworldGenConfig extends AbstractConfig{
 	public static int autumnForestSize;
 	public static int autumnForestColorScale;
 
-	private static boolean UBCSandReplacer;
-	
 	//public static boolean subLeaves;
 	//public static int subLeafDistance;
 	
@@ -71,7 +69,7 @@ public class OverworldGenConfig extends AbstractConfig{
 		
 
 		if (Core.UBC){
-			UBCSandReplacer = config.get("UBC Options", "Replace some of the world's sand and sandstone with UBC sedimentary sand", true).getBoolean();
+			boolean UBCSandReplacer = config.get("UBC Options", "Replace some of the world's sand and sandstone with UBC sedimentary sand", true).getBoolean();
 			if (UBCSandReplacer){
 				new ReplacerUBCSand(Blocks.SAND);
 				//new ReplacerUBCSand(Blocks.GRAVEL);

@@ -78,7 +78,7 @@ public class WTFStoneRegistry extends AbstractConfig {
 		}
 	}
 
-	public static void loadStoneReg() throws Exception{
+	public static void loadStoneReg() {
 		loadOverrideMap();
 		config.load();
 

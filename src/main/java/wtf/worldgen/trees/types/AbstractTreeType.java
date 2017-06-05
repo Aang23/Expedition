@@ -73,12 +73,11 @@ public abstract class AbstractTreeType {
 
 	//public boolean leafNoise = true;
 	
-	public AbstractTreeType setWaterGen(int depth){
+	public void setWaterGen(int depth){
 		waterGenerate = depth;
 		canGrowOn.add(Blocks.WATER);
 		canGrowOn.add(Blocks.SAND);
 		canGrowOn.add(Blocks.GRAVEL);
-		return this;
 	}
 
 	public abstract int getBranchesPerNode(double nodeHeight, double scale);

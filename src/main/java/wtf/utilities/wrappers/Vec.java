@@ -28,16 +28,16 @@ public class Vec {
 		vecX = MathHelper.cos((float) pitchX) * sinY;
 		vecZ = MathHelper.sin((float) pitchX) * sinY;
 	}
-	private float pi = (float)Math.PI*2;
-	
-	
+
+
 	public Vec(BlockPos pos, Random random){
 		ori = new BlockPos(pos.getX()+0.5, pos.getY()+0.5, pos.getZ()+0.5);
 		currentX = pos.getX();
 		currentZ = pos.getZ();
 		currentY = pos.getY();
-		float pitchX = random.nextFloat()*pi;
-		float pitchY = random.nextFloat()*pi;
+		float pi = (float) Math.PI * 2;
+		float pitchX = random.nextFloat()* pi;
+		float pitchY = random.nextFloat()* pi;
 		float sinY = MathHelper.sin(pitchY);
 		vecY = MathHelper.cos(pitchY);
 		vecX = MathHelper.cos(pitchX) * sinY;

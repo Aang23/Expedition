@@ -24,12 +24,10 @@ public class LootEventListener {
 			this.pool = pool;
 		}
 		
-		public boolean trySet(LootTableLoadEvent event, LootEntry entry){
+		public void trySet(LootTableLoadEvent event, LootEntry entry){
 			if (event.getName() == name){
 				event.getTable().getPool(pool).addEntry(entry);
-				return true;
 			}
-			return false;
 		}
 		
 	}

@@ -22,14 +22,12 @@ public class EntityStoneCrack extends Entity{
 
 	private int count;
 	private Random random = new Random();
-	private final BlockPos ori;
 
 	private EntityStoneCrack(World worldIn, BlockPos pos) {
 		super(worldIn);
 		this.posX=pos.getX();
 		this.posY=pos.getY();
 		this.posZ=pos.getZ();
-		this.ori = pos;
 	}
 	
 	public static void crackStone(World world, BlockPos pos){

@@ -21,10 +21,10 @@ public class Shrub {
 		this.gen = gen;
 	}
 	
-	public boolean generate(World worldIn, Random rand, BlockPos position)
+	public void generate(World worldIn, Random rand, BlockPos position)
     {
        if (position == null){
-    	   return false;
+           return;
        }
 		
        IBlockState state = worldIn.getBlockState(position);
@@ -61,7 +61,6 @@ public class Shrub {
             }
         }
 
-        return true;
     }
 
 }

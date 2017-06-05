@@ -7,14 +7,11 @@ import net.minecraft.world.World;
 
 public class EntityWTFSlidingBlock extends EntityWTFFallingBlock{
 
-	private final int oriY;
-	
 	public EntityWTFSlidingBlock(World worldIn, BlockPos pos, BlockPos targetpos, IBlockState fallingBlockState) {
 		super(worldIn, pos, fallingBlockState);
 		double motx = pos.getX() - targetpos.getX();
 		double motz = pos.getZ() - targetpos.getZ();
 		addVelocity(0.05D * motx, -0.1D, 0.05D * motz);
-		this.oriY = pos.getY();
 		
 		worldIn.spawnEntity(this);
 		worldIn.setBlockToAir(pos);

@@ -79,7 +79,8 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
 	        this.setCombatTask();
 	    }
 
-	    @Override
+	    @SuppressWarnings("unchecked")
+		@Override
 		protected void initEntityAI()
 	    {
 	        this.tasks.addTask(1, new EntityAISwimming(this));

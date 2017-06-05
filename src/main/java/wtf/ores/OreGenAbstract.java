@@ -113,11 +113,10 @@ public abstract class OreGenAbstract{
 	/**
 	 * This sets the density for the vein- it does not affect individual block density when using WTFOres dense ores function
 	 * @param density
-	 * @return 
+	 * @return
 	 */
-	public OreGenAbstract setVeinDensity(float density){
+	public void setVeinDensity(float density){
 		this.veinDensity = density;
-		return this;
 	}
 	
 	

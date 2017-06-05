@@ -74,7 +74,7 @@ public class WTFBiomes {
 
 	}
 	
-	public static Biome registerSubBiome(SubBiome subbiome,String name, int id, int parentBiome){
+	public static void registerSubBiome(SubBiome subbiome, String name, int id, int parentBiome){
 		Biome biome = (Biome)subbiome;
 		BiomeEntry entry = new BiomeEntry(biome, id);
 		BiomeManager.addBiome(BiomeType.COOL, entry);
@@ -82,7 +82,6 @@ public class WTFBiomes {
 		biome.setRegistryName(name);
 		Biome.registerBiome(id, name, biome);
 		SubBiomeGenerator.subBiomeRegistry.put((byte)parentBiome, subbiome);
-		return biome;
 	}
 	
 	

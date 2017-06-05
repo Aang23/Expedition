@@ -1,7 +1,6 @@
 package wtf.blocks;
 
 import java.util.List;
-import java.util.Random;
 
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
@@ -44,8 +43,6 @@ public class AbstractBlockDerivativeFalling extends BlockFalling{
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune)
     {
         List<ItemStack> ret = new java.util.ArrayList<>();
-
-        Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 
         for (int loop = 3-this.getMetaFromState(state); loop > -1; loop--){
         	ret.addAll(parentForeground.getBlock().getDrops(world, pos, parentForeground, fortune));

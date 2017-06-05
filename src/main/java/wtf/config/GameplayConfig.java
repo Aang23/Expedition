@@ -61,7 +61,7 @@ public class GameplayConfig extends AbstractConfig {
 	public static double explosionForceMod;
 	public static boolean fracSimple;
 
-	public static void loadConfig() throws Exception{
+	public static void loadConfig() {
 	config.load();
 	
 	/*

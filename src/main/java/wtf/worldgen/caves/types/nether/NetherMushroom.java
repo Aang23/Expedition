@@ -49,7 +49,7 @@ public class NetherMushroom extends AbstractCaveType{
 	}
 
 	
-	public boolean generateMushroom(GeneratorMethods gen, Random rand, BlockPos position)
+	public void generateMushroom(GeneratorMethods gen, Random rand, BlockPos position)
     {
         Block block = rand.nextBoolean() ? Blocks.BROWN_MUSHROOM_BLOCK : Blocks.RED_MUSHROOM_BLOCK;
         
@@ -98,7 +98,6 @@ public class NetherMushroom extends AbstractCaveType{
 
             if (!flag)
             {
-                return false;
             }
             else
             {
@@ -106,7 +105,6 @@ public class NetherMushroom extends AbstractCaveType{
 
                 if (block1.hashCode() != WTFBlocks.mycorrack.hashCode())
                 {
-                    return false;
                 }
                 else
                 {
@@ -235,13 +233,11 @@ public class NetherMushroom extends AbstractCaveType{
                         }
                     }
 
-                    return true;
                 }
             }
         }
         else
         {
-            return false;
         }
     }
 }

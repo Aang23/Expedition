@@ -41,6 +41,7 @@ public class BlockClaySlab extends BlockColored{
 	{
 		return height1;
 	}
+
 	public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos)
 	{
 		return true;

@@ -17,9 +17,7 @@ public class FracVec{
 	private final double vecX;
 	private final double vecY;
 	private final double vecZ;
-	
-	private float pi = (float)Math.PI*2;
-	
+
 	public FracVec(BlockPos pos, int str, int maxDist, double x, double y, double z) {
 		this.oriX = pos.getX() + 0.5;
 		this.oriY = pos.getY() + 0.5;
@@ -35,9 +33,10 @@ public class FracVec{
 		this.oriX = pos.getX() + 0.5;
 		this.oriY = pos.getY() + 0.5;
 		this.oriZ = pos.getZ() + 0.5;
-		
-		float pitchX = random.nextFloat()*pi;
-		float pitchY = random.nextFloat()*pi;
+
+		float pi = (float) Math.PI * 2;
+		float pitchX = random.nextFloat()* pi;
+		float pitchY = random.nextFloat()* pi;
 		float sinY = MathHelper.sin(pitchY);
 		vecY = MathHelper.cos(pitchY);
 		vecX = MathHelper.cos(pitchX) * sinY;

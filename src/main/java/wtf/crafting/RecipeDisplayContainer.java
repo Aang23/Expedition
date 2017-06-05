@@ -12,13 +12,10 @@ public class RecipeDisplayContainer extends Container{
 
 	//ArrayList<IRecipe> craftInventory;
 
-	private final EntityPlayer player;
-
 	private RecipeInventory recipeInventory;
 	private IngrediantsAndOutputsInventory ingrediantsInventory;
 
 	public RecipeDisplayContainer(EntityPlayer player){
-		this.player = player;
 		recipeInventory = new RecipeInventory(player);
 		ingrediantsInventory = new IngrediantsAndOutputsInventory();
 		

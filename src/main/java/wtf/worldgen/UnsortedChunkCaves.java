@@ -22,9 +22,9 @@ public class UnsortedChunkCaves {
 		this.coords = coords;
 	}
 	
-	public boolean addWallPos(BlockPos wall, AdjPos adj){
+	public void addWallPos(BlockPos wall, AdjPos adj){
 		XZ xz = new XZ(adj.getX(), adj.getZ());
-		if (sortedCaveLists.stream().anyMatch(cave -> cave.contains(xz))) return true;
+		if (sortedCaveLists.stream().anyMatch(cave -> cave.contains(xz))) return;
 		ArrayList<CavePosition> list = unsortedCavePos.get(xz);
 
 		try {
@@ -33,15 +33,14 @@ public class UnsortedChunkCaves {
                     //System.out.println("cave pos found");
                     pos.wall.add(wall);
                     pos.adj.add(adj);
-                    return true;
+					return;
                 }
             }
         }
 		catch (Exception e){
 			System.out.println("While trying to add a wall pos on a previous column, a cave list was null");	
 		}
-		
-		return false;
+
 	}
 
 

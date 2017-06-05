@@ -20,7 +20,6 @@ public class ExpVec extends Vec{
 
 	private final World world;
 	private double str;
-	private float attenuation = 0.75F;
 	private final boolean flaming;
 
 
@@ -95,7 +94,7 @@ public class ExpVec extends Vec{
 				}
 			}
 		}
-		str -= attenuation;
+		str -= 0.75F;
 		return true;
 	}
 

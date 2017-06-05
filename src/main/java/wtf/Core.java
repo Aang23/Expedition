@@ -106,13 +106,12 @@ public class Core {
 		//proxy.finishLangFile();
 	}
 	
-	@EventHandler public void load(FMLInitializationEvent event) throws Exception
-	{
+	@EventHandler public void load(FMLInitializationEvent event) {
 		EventListenerRegistry.initListeners();
 	}
 	
 	@EventHandler
-	public void PostInit(FMLPostInitializationEvent postEvent) throws Exception{
+	public void PostInit(FMLPostInitializationEvent postEvent) {
 
 		if (MasterConfig.doResourcePack){
 			//proxy.enableBlockstateTexturePack();

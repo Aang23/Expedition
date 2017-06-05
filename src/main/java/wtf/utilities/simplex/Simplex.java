@@ -21,8 +21,6 @@ import java.util.Random;
 
 public class Simplex {  // Simplex noise in 2D, 3D and 4D
 
-    private static int RANDOMSEED = 0;
-
     private static Grad grad3[] = {new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0), new Grad(-1, -1, 0),
             new Grad(1, 0, 1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1, 0, -1),
             new Grad(0, 1, 1), new Grad(0, -1, 1), new Grad(0, 1, -1), new Grad(0, -1, -1)};
@@ -57,6 +55,7 @@ public class Simplex {  // Simplex noise in 2D, 3D and 4D
     public Simplex(int seed) {
         short[] p = p_supply.clone();
 
+        int RANDOMSEED = 0;
         if (seed == RANDOMSEED) {
             Random rand = new Random();
             seed = rand.nextInt();

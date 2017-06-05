@@ -16,9 +16,7 @@ public abstract class ReplacerUBCAbstract extends Replacer{
 	private static int columnZ;
 	
 	private static UBStrataColumn column;
-	
-	private int sedHash;
-	
+
 	IBlockState[] sands = {
 			WTFBlocks.ubcSand.getStateFromMeta(1),
 			WTFBlocks.ubcSand.getStateFromMeta(0),
@@ -45,7 +43,6 @@ public abstract class ReplacerUBCAbstract extends Replacer{
 	
 	public ReplacerUBCAbstract(Block block) {
 		super(block);
-		sedHash = API.SEDIMENTARY_STONE.getBlock().hashCode();
 	}
 	
 	public static IBlockState getUBCStone(BlockPos pos){

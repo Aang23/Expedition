@@ -119,21 +119,11 @@ public class BlockPuddle extends Block{
 	{
 		return BlockRenderLayer.TRANSLUCENT;
 	}
-	
-    public boolean isPassable(IBlockAccess worldIn, BlockPos pos)
-    {
-        return true;
-    }
     
     @Deprecated
     public EnumBlockRenderType getRenderType(IBlockState state)
     {
         return EnumBlockRenderType.MODEL;
-    }
-    
-    public boolean isBlockSolid(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
-    {
-        return false;
     }
     
 	@Override
