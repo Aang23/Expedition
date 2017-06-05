@@ -1,6 +1,7 @@
 package wtf.worldgen;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -197,15 +198,6 @@ public class WorldScanner {
 									tempAdj.add(new AdjPos(currentPos, prevFaceZ));
 								}
 							}
-							else if (airBlocks.contains(prevZpos) && isWall(chunk, currentPos)){
-								//System.out.println("Trying to add a wallpos on " + zloop);
-							
-								if (!unsortedcavepos.addWallPos(currentPos, new AdjPos(prevZpos, nextFaceZ))){
-									//System.out.println(currentPos.toString() + " " + prevZpos.toString());
-
-									//System.out.println("current block " + chunk.getBlockState(currentPos) + " " + chunk.getBlockState(prevZpos));
-								}
-							}
 						}
 					}
 
@@ -292,9 +284,7 @@ public class WorldScanner {
 
 	protected ArrayList<ExtendedBlockStorage> getStorageList(Chunk chunk){
 		ArrayList<ExtendedBlockStorage> list = new ArrayList<>();
-		for (int loop = 0; loop < 16 && chunk.getBlockStorageArray()[loop] != null; loop++){
-			list.add(chunk.getBlockStorageArray()[loop]);
-		}
+		Collections.addAll(list, chunk.getBlockStorageArray());
 		return list;
 	}
 
