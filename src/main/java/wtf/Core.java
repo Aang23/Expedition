@@ -1,11 +1,9 @@
 package wtf;
 
-import net.minecraft.item.ItemStack;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -15,22 +13,12 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import wtf.config.CaveBiomesConfig;
-import wtf.config.MasterConfig;
-import wtf.config.GameplayConfig;
-import wtf.config.OverworldGenConfig;
-import wtf.config.WTFStoneRegistry;
+import org.apache.logging.log4j.Logger;
+import wtf.config.*;
 import wtf.config.ore.WTFOresNewConfig;
 import wtf.crafting.GuiHandler;
 import wtf.crafting.RecipeParser;
-import wtf.init.BlockSets;
-import wtf.init.EventListenerRegistry;
-import wtf.init.WTFBiomes;
-import wtf.init.WTFBlocks;
-import wtf.init.WTFEntities;
-import wtf.init.WTFItems;
-import wtf.init.WTFRecipes;
-import wtf.init.WTFSubstitutions;
+import wtf.init.*;
 import wtf.proxy.CommonProxy;
 import wtf.utilities.UBC.UBCCompat;
 
@@ -121,10 +109,6 @@ public class Core {
 			RecipeParser.init();
 		}
 
-	}	
-
-
-
-
+	}
 
 }

@@ -1,8 +1,5 @@
 package wtf.blocks;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -21,6 +18,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.Core;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class BlockFoxfire extends AbstractActiveablePlant{
 
@@ -178,8 +178,6 @@ public class BlockFoxfire extends AbstractActiveablePlant{
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		switch (meta){
-		case 0:
-			return getDefaultState();
 		case 1: 
 			return getDefaultState().withProperty(HANGING, true);
 		case 2:
@@ -187,14 +185,13 @@ public class BlockFoxfire extends AbstractActiveablePlant{
 		case 3:
 			return getDefaultState().withProperty(ACTIVE, true).withProperty(HANGING, true);
 		default :
-			return null;
+			return getDefaultState();
 		}
 
 	}
 
 	@Override
 	public int getMetaFromState(IBlockState state) {
-
 		if (!state.getValue(HANGING)){
 			if (!state.getValue(ACTIVE)){
 				return 0;
