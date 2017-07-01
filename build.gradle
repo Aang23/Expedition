@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
 
 
-version = "v1.11.2_1.5"
+version = "v1.11.2_1.5.1"
 group= "WTF.WhiskyTangoFox.Com" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "WTFs_Expedition_"
 
@@ -24,6 +24,9 @@ minecraft {
     version = "1.11.2-13.20.0.2308"
     runDir = "run"
     mappings = "snapshot_20170526"
+
+    replace "@VERSION@", project.version
+    replaceIn "Core.java"
 }
 
 dependencies {

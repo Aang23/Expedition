@@ -26,7 +26,7 @@ import wtf.utilities.UBC.UBCCompat;
 @Mod (modid = Core.coreID, name = "WTFs Expedition", version = Core.version, dependencies = "after:undergroundbiomes")
 public class Core {
 	public static  final String coreID = "wtfcore";
-	public static final String version = "1.11.2_v1.5";
+	public static final String version = "@VERSION@";
 
 	@SidedProxy(clientSide="wtf.proxy.ClientProxy", serverSide="wtf.proxy.CommonProxy")
 	public static CommonProxy proxy;
