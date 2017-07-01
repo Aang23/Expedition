@@ -12,10 +12,7 @@ import wtf.init.BlockSets;
 import wtf.utilities.wrappers.*;
 import wtf.worldgen.replacers.Replacer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class WorldScanner {
 
@@ -279,7 +276,7 @@ public class WorldScanner {
 
 	protected ArrayList<ExtendedBlockStorage> getStorageList(Chunk chunk){
 	    ArrayList<ExtendedBlockStorage> list = new ArrayList<>(Arrays.asList(chunk.getBlockStorageArray()));
-	    list.removeIf(storage -> storage == null);
+	    list.removeIf(Objects::isNull);
 		return list;
 	}
 
