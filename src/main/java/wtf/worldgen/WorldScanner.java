@@ -7,7 +7,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
-import wtf.Core;
 import wtf.init.BlockSets;
 import wtf.utilities.wrappers.*;
 import wtf.worldgen.replacers.Replacer;
@@ -285,8 +284,6 @@ public class WorldScanner {
 
 		for (ExtendedBlockStorage extendedblockstorage : storageList){
 			for (int loop = 0; loop < 16; loop++){
-			    if (extendedblockstorage == null)
-                    Core.coreLog.fatal("Null block storage");
 				blockArray.add(extendedblockstorage.get(chunkX, loop, chunkZ));
 			}	
 		}
