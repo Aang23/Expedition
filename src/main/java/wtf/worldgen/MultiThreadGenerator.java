@@ -1,21 +1,16 @@
 package wtf.worldgen;
 
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
+import wtf.Core;
 import wtf.config.MasterConfig;
 import wtf.config.OverworldGenConfig;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
-import wtf.worldgen.generators.DungeonGenerator;
-import wtf.worldgen.generators.OreGenerator;
-import wtf.worldgen.generators.SubBiomeGenerator;
-import wtf.worldgen.generators.SurfaceGenerator;
-import wtf.worldgen.generators.TickGenBuffer;
-import wtf.worldgen.generators.TreeGenerator;
-import wtf.worldgen.generators.CaveGenerator;
+import wtf.worldgen.generators.*;
+
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MultiThreadGenerator implements Runnable{
 
@@ -55,7 +50,7 @@ public class MultiThreadGenerator implements Runnable{
 		
 		ChunkCoords coords = scan.coords;
 		if (gen == null){
-			System.out.println("******************FOUND NULL GEN");
+			Core.coreLog.fatal("******************FOUND NULL GEN");
 			return;
 		}
 			

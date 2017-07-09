@@ -1,15 +1,12 @@
 package wtf.worldgen;
 
+import net.minecraft.util.math.BlockPos;
+import wtf.Core;
+import wtf.utilities.wrappers.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-
-import net.minecraft.util.math.BlockPos;
-import wtf.utilities.wrappers.AdjPos;
-import wtf.utilities.wrappers.CaveListWrapper;
-import wtf.utilities.wrappers.CavePosition;
-import wtf.utilities.wrappers.ChunkCoords;
-import wtf.utilities.wrappers.XZ;
 
 public class UnsortedChunkCaves {
 
@@ -25,7 +22,17 @@ public class UnsortedChunkCaves {
 	public void addWallPos(BlockPos wall, AdjPos adj){
 		XZ xz = new XZ(adj.getX(), adj.getZ());
 		if (sortedCaveLists.stream().anyMatch(cave -> cave.contains(xz))) return;
-		ArrayList<CavePosition> list = unsortedCavePos.get(xz);
+
+        try {
+            unsortedCavePos.get(xz).stream().filter(pos -> pos.floor < adj.getY() && pos.ceiling > adj.getY()).forEach(pos -> {
+                pos.wall.add(adj);
+                pos.adj.add(adj);
+            });
+        } catch (NullPointerException e) {
+            Core.coreLog.fatal("While trying to add a wall pos on a previous column, the cave list was null");
+        }
+
+		/*
 
 		try {
             for (CavePosition pos : list) {
@@ -38,8 +45,8 @@ public class UnsortedChunkCaves {
             }
         }
 		catch (Exception e){
-			System.out.println("While trying to add a wall pos on a previous column, a cave list was null");	
-		}
+			Core.coreLog.fatal("While trying to add a wall pos on a previous column, the cave list was null");
+		}*/
 
 	}
 
