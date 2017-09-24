@@ -1,29 +1,26 @@
 package wtf.crafting;
 
-import java.util.ArrayList;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
 public class RecipeInventory implements IInventory{
 
 	private int currentPage = 0;
-	
-	 
-	
+
 	private ItemStack[] stacks = new ItemStack[27];
 	public RecipeWrapper [] recipes = new RecipeWrapper[27];
-	private ArrayList<RecipeWrapper> craftableRecipes;
+	private NonNullList<RecipeWrapper> craftableRecipes = NonNullList.create();
 	private final int size;
 
 
 	@Override
 	public boolean isEmpty() {
 		for (ItemStack stack : stacks)
-			if (stack != null && stack != ItemStack.EMPTY)
+			if (stack != ItemStack.EMPTY)
 				return false;
 		return true;
 	}
@@ -33,7 +30,6 @@ public class RecipeInventory implements IInventory{
 		size = craftableRecipes.size();
 		
 		updateStacks();
-
 	}
 	
 	private void updateStacks(){
@@ -61,10 +57,10 @@ public class RecipeInventory implements IInventory{
 			currentPage--;
 			updateStacks();
 		}
-		}
+	}
 	
 	public void setRecipeSlot(int slot, RecipeWrapper recipe){
-		this.stacks[slot] = recipe != null ? recipe.output : null;
+		this.stacks[slot] = recipe != null ? recipe.output : ItemStack.EMPTY;
 		this.recipes[slot] = recipe;
 		
 	}
@@ -97,12 +93,12 @@ public class RecipeInventory implements IInventory{
 		else if (slot < 37){
 			return stacks[slot];
 		}
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public ItemStack decrStackSize(int slot, int size) {
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 
@@ -119,12 +115,12 @@ public class RecipeInventory implements IInventory{
 			ItemStack stack = recipe.output;
 			this.stacks[slot] = stack;
 			this.recipes[slot] = recipe;
-			if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
+			if (stack != ItemStack.EMPTY && stack.getCount() > this.getInventoryStackLimit()) {
 				stack.setCount(this.getInventoryStackLimit());
 			}
 		}
 		else {
-			this.stacks[slot] = null;
+			this.stacks[slot] = ItemStack.EMPTY;
 			this.recipes[slot] = null;
 		}
 	}
@@ -150,7 +146,7 @@ public class RecipeInventory implements IInventory{
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
 		// TODO Auto-generated method stub
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	

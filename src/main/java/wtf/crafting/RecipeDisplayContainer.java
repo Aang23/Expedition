@@ -1,7 +1,5 @@
 package wtf.crafting;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.Container;
@@ -46,7 +44,6 @@ public class RecipeDisplayContainer extends Container{
 	}
 
 	@Override
-	@Nullable
 	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player)
 	{
 		if (slotId == 37){
@@ -60,12 +57,9 @@ public class RecipeDisplayContainer extends Container{
 			if (recipe != null){
 				ingrediantsInventory.setRecipe(recipe);
 			}
-			else {
-				//null recipe
-			}
 		}
 		
-		return null;
+		return ItemStack.EMPTY;
 
 	}
 

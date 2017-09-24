@@ -1,28 +1,27 @@
 package wtf.crafting;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
+import java.util.HashMap;
 
 public class CraftingLogic {
 	
-	public static ArrayList<RecipeWrapper> getCraftableStack(EntityPlayer player) {
+	public static NonNullList<RecipeWrapper> getCraftableStack(EntityPlayer player) {
 		
 		HashMap<Integer, Integer> inventoryHashMap = new HashMap<>();
 		
 		for (ItemStack stack : player.inventory.mainInventory){
-			if (stack != null){
+			if (stack != ItemStack.EMPTY){
 				inventoryHashMap.put(itemNum(stack), stack.getCount());
 			}
 		}
-		
-		ArrayList<RecipeWrapper> craftableRecipes = new ArrayList<>();
+
+		NonNullList<RecipeWrapper> craftableRecipes = NonNullList.create();
 	
 		for (RecipeWrapper recipe : RecipeParser.parsedRecipes) {
-			
 			if (canCraft(recipe, inventoryHashMap)) {
 				craftableRecipes.add(recipe);
 			}
@@ -31,8 +30,7 @@ public class CraftingLogic {
 	}
 	
 	public static boolean canCraft(RecipeWrapper recipe, HashMap<Integer, Integer> inventoryHashMap){
-		
-		for (ArrayList<ItemStack> subList : recipe.getIngrediants()){
+		for (NonNullList<ItemStack> subList : recipe.getIngrediants()){
 			if (subList.size() > 0 && !hasIngrediant(inventoryHashMap, subList)){
 					return false;
 			}
@@ -41,10 +39,9 @@ public class CraftingLogic {
 		
 	}
 	
-	public static boolean hasIngrediant(HashMap<Integer, Integer> inventoryHashMap, ArrayList<ItemStack> subList){
-		
+	public static boolean hasIngrediant(HashMap<Integer, Integer> inventoryHashMap, NonNullList<ItemStack> subList){
 		for (ItemStack ingrediant : subList){
-			if(ingrediant == null){
+			if(ingrediant == ItemStack.EMPTY){
 				return true;
 			}
 			if (inventoryHashMap.containsKey(itemNum(ingrediant))){// && inventoryHashMap.get(ingrediant) >= ingrediant.stackSize){

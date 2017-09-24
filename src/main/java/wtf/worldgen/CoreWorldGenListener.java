@@ -1,10 +1,7 @@
 package wtf.worldgen;
 
-import java.util.HashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.event.terraingen.BiomeEvent.GetVillageBlockID;
@@ -16,6 +13,10 @@ import wtf.Core;
 import wtf.init.WTFBlocks;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
+
+import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CoreWorldGenListener {
 
@@ -45,12 +46,12 @@ public class CoreWorldGenListener {
 
 		ChunkCoords coords = new ChunkCoords(event.getChunkX(), event.getChunkZ());
 
-		BlockPos pos = coords.getGenMarkerPos();
-		event.getWorld().setBlockState(pos, WTFBlocks.genMarker.getDefaultState());	
 		
 		for (ChunkCoords adjCoords : coords.getChunksInRadius(1)){
 			if (shouldScan(worldMap, adjCoords)){
-				MultiThreadScanner scanner = new MultiThreadScanner(event.getWorld(), adjCoords);
+                BlockPos pos = coords.getGenMarkerPos();
+                event.getWorld().setBlockState(pos, WTFBlocks.genMarker.getDefaultState());
+                MultiThreadScanner scanner = new MultiThreadScanner(event.getWorld(), adjCoords);
 				worldMap.regScanner(scanner);
 				executor.execute(scanner);	
 			}
@@ -115,8 +116,10 @@ public class CoreWorldGenListener {
 			if (!checkCoords.isPopulated(worldMap.world)){
 				return false;
 			}
+
 		}
-		return true;
+
+		return worldMap.world.provider.getDimensionType() == DimensionType.OVERWORLD || worldMap.world.provider.getDimensionType() == DimensionType.NETHER;
 	}
 	
 	private static boolean readyForGen(GenScanMap worldMap, ChunkCoords coords){

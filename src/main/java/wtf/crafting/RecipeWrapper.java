@@ -1,20 +1,20 @@
 package wtf.crafting;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import wtf.Core;
 
+import java.util.List;
+
 public class RecipeWrapper {
 
-	private final ArrayList<ArrayList<ItemStack>> wrappedRecipe = new ArrayList<>();
+	private final NonNullList<NonNullList<ItemStack>> wrappedRecipe = NonNullList.create();
 	public final ItemStack output;
 
 
@@ -67,7 +67,7 @@ public class RecipeWrapper {
 					count++;
 				}
 				else {
-					wrappedRecipe.add(new ArrayList<>());
+					wrappedRecipe.add(NonNullList.create());
 				}
 			}
 		}
@@ -76,13 +76,13 @@ public class RecipeWrapper {
 
 
 
-	public ArrayList<ArrayList<ItemStack>> getIngrediants(){
+	public NonNullList<NonNullList<ItemStack>> getIngrediants(){
 		return wrappedRecipe;
 	}
 
 	
-	private ArrayList<ItemStack> getSublist(IRecipe recipe, Object obj){
-		ArrayList<ItemStack> subList = new ArrayList<>();
+	private NonNullList<ItemStack> getSublist(IRecipe recipe, Object obj){
+        NonNullList<ItemStack> subList = NonNullList.create();
 		if (obj instanceof ItemStack){
 			subList = parseItemStack(recipe, subList, (ItemStack)obj);
 		}
@@ -92,6 +92,7 @@ public class RecipeWrapper {
 			}
 		}
 		else if (obj == null){
+			subList.add(ItemStack.EMPTY);
 			//do nothing, this is a placeholder null in a shaped recipe
 		}
 		else {
@@ -100,10 +101,10 @@ public class RecipeWrapper {
 		return subList;
 	}
 
-	public ArrayList<ItemStack> parseItemStack(IRecipe recipe, ArrayList<ItemStack> subList, ItemStack stack){
+	public NonNullList<ItemStack> parseItemStack(IRecipe recipe, NonNullList<ItemStack> subList, ItemStack stack){
 
 		try {
-			if (stack != null && (stack.getItemDamage() < 0 || stack.getItemDamage() > 15)){
+			if (stack != ItemStack.EMPTY && (stack.getItemDamage() < 0 || stack.getItemDamage() > 15)){
 				for (int loop = 0; loop < 15 ; loop ++){
 					ItemStack newStack =new ItemStack(stack.getItem(), stack.getCount(), loop);
 					subList.add(newStack);
@@ -121,4 +122,4 @@ public class RecipeWrapper {
 		}
 		return subList;
 	}
-	}
+}

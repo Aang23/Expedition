@@ -1,10 +1,9 @@
 package wtf.crafting;
 
-import java.util.ArrayList;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
 
 public class IngrediantsAndOutputsInventory implements IInventory{
@@ -16,7 +15,7 @@ public class IngrediantsAndOutputsInventory implements IInventory{
 		//#0 is the result
 		//1-9 are the recipe
 		// the +1 -1 stuff is to account for this
-		ArrayList<ArrayList<ItemStack>> ingrediantsLists= recipe.getIngrediants();
+		NonNullList<NonNullList<ItemStack>> ingrediantsLists= recipe.getIngrediants();
 		for (int slotLoop = 1; slotLoop < 10 ; slotLoop++){
 			if (slotLoop-1 < ingrediantsLists.size() && !ingrediantsLists.get(slotLoop-1).isEmpty()){
 
@@ -35,7 +34,7 @@ public class IngrediantsAndOutputsInventory implements IInventory{
 	@Override
 	public boolean isEmpty() {
 		for (ItemStack stack : stacks)
-			if (stack != null && stack != ItemStack.EMPTY)
+			if (stack != ItemStack.EMPTY)
 				return false;
 		return true;
 	}
@@ -44,16 +43,12 @@ public class IngrediantsAndOutputsInventory implements IInventory{
 		// TODO Auto-generated constructor stub
 	}
 
-
-
-
-
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack stack) {
 		this.stacks[slot] = stack;
 	}
-	
-	
+
+
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
@@ -86,13 +81,13 @@ public class IngrediantsAndOutputsInventory implements IInventory{
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
 		// TODO Auto-generated method stub
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
 		// TODO Auto-generated method stub
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 
@@ -105,7 +100,7 @@ public class IngrediantsAndOutputsInventory implements IInventory{
 	@Override
 	public void markDirty() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -117,13 +112,13 @@ public class IngrediantsAndOutputsInventory implements IInventory{
 	@Override
 	public void openInventory(EntityPlayer player) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void closeInventory(EntityPlayer player) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -141,7 +136,7 @@ public class IngrediantsAndOutputsInventory implements IInventory{
 	@Override
 	public void setField(int id, int value) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -153,7 +148,7 @@ public class IngrediantsAndOutputsInventory implements IInventory{
 	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -1,12 +1,12 @@
 package wtf.worldgen;
 
-import java.util.concurrent.CountDownLatch;
-
 import net.minecraft.world.World;
 import wtf.Core;
 import wtf.utilities.UBC.UBCGenMethods;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.ChunkScan;
+
+import java.util.concurrent.CountDownLatch;
 
 public class MultiThreadScanner implements Runnable{
 
@@ -29,7 +29,7 @@ public class MultiThreadScanner implements Runnable{
 
 	@Override
 	public void run() {
-		WorldScanner scanner = null;//new WorldScanner();
+		WorldScanner scanner;
 		switch (world.provider.getDimensionType()) {
 			case NETHER:
 				scanner = new NetherScanner();
@@ -38,20 +38,18 @@ public class MultiThreadScanner implements Runnable{
 				scanner = new WorldScanner();
 				break;
 			case THE_END:
-				//scanner = new NetherScanner();
-				break;
+				return;
 			default:
-				break;
+				return;
 		}
 
-		if (scanner != null){
-			GeneratorMethods gen = Core.UBC ? new UBCGenMethods(world, coords, world.rand) : new GeneratorMethods(world, coords, world.rand);
-			ChunkScan scan = scanner.getChunkScan(world, coords, gen);
-			CoreWorldGenListener.storeScan(world, coords, scan);
-			
-			CoreWorldGenListener.deRegScanner(world, coords);
-			latch.countDown();
-		}
+		GeneratorMethods gen = Core.UBC ? new UBCGenMethods(world, coords, world.rand) : new GeneratorMethods(world, coords, world.rand);
+		ChunkScan scan = scanner.getChunkScan(world, coords, gen);
+		CoreWorldGenListener.storeScan(world, coords, scan);
+
+		CoreWorldGenListener.deRegScanner(world, coords);
+		latch.countDown();
+
 	}
 
 	
