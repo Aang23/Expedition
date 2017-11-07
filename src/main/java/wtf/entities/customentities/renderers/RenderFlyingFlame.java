@@ -2,9 +2,9 @@ package wtf.entities.customentities.renderers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBlaze;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -79,7 +79,7 @@ public class RenderFlyingFlame extends RenderLiving<EntityFlyingFlame>
         float f = entity.width * entity.getFlameSize();
         GlStateManager.scale(f, f, f);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        BufferBuilder vertexbuffer = tessellator.getBuffer();
         float f1 = 0.5F;
         float f2 = 0.0F;
         float f3 = entity.height / f;

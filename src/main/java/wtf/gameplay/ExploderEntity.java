@@ -27,18 +27,18 @@ public class ExploderEntity extends Entity{
 		super(worldIn);
 		this.fuse = fuse;
 		this.str = str;
-		this.posX=pos.xCoord;
-		this.posY=pos.yCoord;
-		this.posZ=pos.zCoord;
+		this.posX=pos.x;
+		this.posY=pos.y;
+		this.posZ=pos.z;
 	}
 
 	public ExploderEntity(World worldIn, Vec3d pos, float str, int fuse, boolean fire) {
 		super(worldIn);
 		this.fuse = fuse;
 		this.str = str;
-		this.posX=pos.xCoord;
-		this.posY=pos.yCoord;
-		this.posZ=pos.zCoord;
+		this.posX=pos.x;
+		this.posY=pos.y;
+		this.posZ=pos.z;
 		this.flaming = fire;
 	}
 

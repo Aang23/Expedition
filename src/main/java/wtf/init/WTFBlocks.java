@@ -1,34 +1,17 @@
 
 package wtf.init;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
-import org.apache.commons.lang3.StringUtils;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.apache.commons.lang3.StringUtils;
 import wtf.Core;
-import wtf.blocks.BlockDecoAnim;
-import wtf.blocks.BlockFoxfire;
-import wtf.blocks.BlockIcicle;
-import wtf.blocks.BlockDecoStatic;
-import wtf.blocks.BlockClaySlab;
-import wtf.blocks.BlockCustomSlab;
-import wtf.blocks.BlockPatchIce;
-import wtf.blocks.BlockPuddle;
-import wtf.blocks.BlockRedCactus;
-import wtf.blocks.BlockRoots;
-import wtf.blocks.BlockSpeleothem;
-import wtf.blocks.GenPlaceHolder;
-import wtf.blocks.BlockMycorrack;
-import wtf.blocks.BlockNaturalSandstone;
-import wtf.blocks.OreNitre;
+import wtf.blocks.*;
 import wtf.blocks.substitution.BlockWTFTorch;
 import wtf.config.StoneRegEntry;
 import wtf.config.WTFStoneRegistry;
@@ -37,6 +20,9 @@ import wtf.crafting.render.WCICTileEntity;
 import wtf.gameplay.OreSandGoldNugget;
 import wtf.items.ItemBlockState;
 import wtf.worldgen.replacers.NetherrackReplacer;
+
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class WTFBlocks{
 
@@ -174,9 +160,9 @@ public class WTFBlocks{
 	public static Block registerBlock(Block block, String name){
 		block.setRegistryName(name);
 		block.setUnlocalizedName(name);
-		GameRegistry.register(block);
+		ForgeRegistries.BLOCKS.register(block);
 		ItemBlock temp = (ItemBlock) new ItemBlock(block).setUnlocalizedName(name).setRegistryName(name).setHasSubtypes(true);
-		GameRegistry.register(temp);
+		ForgeRegistries.ITEMS.register(temp);
 		Core.proxy.registerItemRenderer(block);
 		
 		
@@ -195,9 +181,9 @@ public class WTFBlocks{
 		
 		block.setRegistryName(name);
 		block.setUnlocalizedName(name);
-		GameRegistry.register(block);
+		ForgeRegistries.BLOCKS.register(block);
 		ItemBlock temp = (ItemBlock) new ItemBlockState(block).setUnlocalizedName(name).setRegistryName(name).setHasSubtypes(true);
-		GameRegistry.register(temp);
+		ForgeRegistries.ITEMS.register(temp);
 		Core.proxy.registerItemSubblocksRenderer(block, meta);
 		
 		return block;

@@ -1,17 +1,6 @@
 package wtf.crafting;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSpade;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.*;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -20,8 +9,12 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import wtf.Core;
-import wtf.config.MasterConfig;
 import wtf.config.GameplayConfig;
+import wtf.config.MasterConfig;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class RecipeParser {
 
@@ -30,9 +23,7 @@ public class RecipeParser {
 	static HashSet<IRecipe> toremove = new HashSet<>();
 
 	public static void init(){
-
-		List<IRecipe> recipeList = CraftingManager.getInstance().getRecipeList();
-		Iterator<IRecipe> iterator = recipeList.iterator();
+		Iterator<IRecipe> iterator = CraftingManager.REGISTRY.iterator();
 		while (iterator.hasNext()){
 			IRecipe recipe = iterator.next();
 		

@@ -1,10 +1,10 @@
 package wtf.init;
 
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import wtf.Core;
-import wtf.config.MasterConfig;
 import wtf.config.GameplayConfig;
+import wtf.config.MasterConfig;
 import wtf.items.HomeScroll;
 import wtf.items.SimpleItem;
 
@@ -24,7 +24,7 @@ public class WTFItems {
 	
 	private static Item registerItem(Item item, String name){
 		item.setUnlocalizedName(name);
-		GameRegistry.register(item.setRegistryName(name));
+		ForgeRegistries.ITEMS.register(item.setRegistryName(name));
 		Core.proxy.registerItemRenderer(item);
 		return item;
 	}

@@ -2,6 +2,7 @@ package wtf.crafting;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.util.NonNullList;
@@ -23,7 +24,7 @@ public class RecipeWrapper {
 
 
 	public RecipeWrapper(ShapelessRecipes rawRecipe){
-		for (ItemStack stack: rawRecipe.recipeItems){
+		for (Ingredient stack: rawRecipe.recipeItems){
 			wrappedRecipe.add(getSublist(rawRecipe, stack));
 		}
 		output = rawRecipe.getRecipeOutput();
@@ -34,7 +35,7 @@ public class RecipeWrapper {
 
 		//int width = ObfuscationReflectionHelper.getPrivateValue(ShapedRecipes.class, rawRecipe, "recipeWidth");
 		//int height = ObfuscationReflectionHelper.getPrivateValue(ShapedRecipes.class, rawRecipe, "recipeHeight");
-		for (ItemStack stack : rawRecipe.recipeItems){
+		for (Ingredient stack : rawRecipe.recipeItems){
 			wrappedRecipe.add(getSublist(rawRecipe, stack));
 		}
 		output = rawRecipe.getRecipeOutput();
@@ -43,7 +44,7 @@ public class RecipeWrapper {
 
 	public RecipeWrapper(ShapelessOreRecipe rawRecipe){
 		
-		for (Object obj : rawRecipe.getInput()){
+		for (Object obj : rawRecipe.getIngredients()){
 			wrappedRecipe.add(getSublist(rawRecipe, obj));
 		}
 		output = rawRecipe.getRecipeOutput();
@@ -59,11 +60,11 @@ public class RecipeWrapper {
 		
 		//  This approach doesn't work, and I don't know why 
 		int count = 0;
-		Object[] ingrediants = rawRecipe.getInput();
+		NonNullList ingrediants = rawRecipe.getIngredients();
 		for (int hloop = 0; hloop < 3; hloop++){
 			for (int vloop = 0; vloop < 3; vloop++){
-				if (hloop < height && vloop < width && count < ingrediants.length){
-					wrappedRecipe.add(getSublist(rawRecipe, ingrediants[count]));
+				if (hloop < height && vloop < width && count < ingrediants.size()){
+					wrappedRecipe.add(getSublist(rawRecipe, ingrediants.get(count)));
 					count++;
 				}
 				else {
@@ -85,6 +86,10 @@ public class RecipeWrapper {
         NonNullList<ItemStack> subList = NonNullList.create();
 		if (obj instanceof ItemStack){
 			subList = parseItemStack(recipe, subList, (ItemStack)obj);
+		}
+		else if (obj instanceof Ingredient){
+			for (Object subObj : ((Ingredient) obj).getMatchingStacks())
+				subList = parseItemStack(recipe, subList, (ItemStack)subObj);
 		}
 		else if (obj instanceof List){
 			for (Object subObj : (List<?>)obj){

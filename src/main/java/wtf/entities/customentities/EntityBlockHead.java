@@ -1,22 +1,8 @@
 package wtf.entities.customentities;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAttackMelee;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIHurtByTarget;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.*;
+import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -40,7 +27,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
+import javax.annotation.Nullable;
+
+public class EntityBlockHead extends EntityMob implements IRangedAttackMob {
 
 	//get them to not attack villgers on sight
 	//Set them non-flamable
@@ -49,262 +38,230 @@ public class EntityBlockHead extends EntityMob implements IRangedAttackMob{
 	public double renderOffsetY = 0;
 	public double renderOffsetZ = 0;
 
-	    private static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.createKey(EntityBlockHead.class, DataSerializers.BOOLEAN);
-	    private final AIBlockHeadRangedAttack aiArrowAttack = new AIBlockHeadRangedAttack(this, 1.0D, 20, 15.0F);
-	    private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.2D, false)
-	    {
-	        /**
-	         * Resets the task
-	         */
-	        @Override
-			public void resetTask()
-	        {
-	            super.resetTask();
-	            EntityBlockHead.this.setSwingingArms(false);
-	        }
-	        /**
-	         * Execute a one shot task or start executing a continuous task
-	         */
-	        @Override
-			public void startExecuting()
-	        {
-	            super.startExecuting();
-	            EntityBlockHead.this.setSwingingArms(true);
-	        }
-	    };
-
-	    public EntityBlockHead(World worldIn)
-	    {
-	        super(worldIn);
-	        this.setCombatTask();
-	    }
-
-	    @SuppressWarnings("unchecked")
+	private static final DataParameter<Boolean> SWINGING_ARMS = EntityDataManager.createKey(EntityBlockHead.class, DataSerializers.BOOLEAN);
+	private final AIBlockHeadRangedAttack aiArrowAttack = new AIBlockHeadRangedAttack(this, 1.0D, 20, 15.0F);
+	private final EntityAIAttackMelee aiAttackOnCollide = new EntityAIAttackMelee(this, 1.2D, false) {
+		/**
+		 * Resets the task
+		 */
 		@Override
-		protected void initEntityAI()
-	    {
-	        this.tasks.addTask(1, new EntityAISwimming(this));
-	        //this.tasks.addTask(2, new EntityAIRestrictSun(this));
-	        //this.tasks.addTask(3, new EntityAIFleeSun(this, 1.0D));
-	        this.tasks.addTask(2, new EntityAIAvoidEntity(this, EntityCreeper.class, 6.0F, 1.0D, 1.2D));
-	       
-	        this.tasks.addTask(4, new EntityAIWander(this, 1.0D));
-	        this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
-	        this.tasks.addTask(6, new EntityAILookIdle(this));
-	        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
-	        //this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityIronGolem.class, true));
-	    }
+		public void resetTask() {
+			super.resetTask();
+			EntityBlockHead.this.setSwingingArms(false);
+		}
 
-	    @Override
-		protected void applyEntityAttributes()
-	    {
-	        super.applyEntityAttributes();
-	        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.20D);
-	    }
+		/**
+		 * Execute a one shot task or start executing a continuous task
+		 */
+		@Override
+		public void startExecuting() {
+			super.startExecuting();
+			EntityBlockHead.this.setSwingingArms(true);
+		}
+	};
 
-	    @Override
-		protected void entityInit()
-	    {
-	        super.entityInit();
-	        this.dataManager.register(SWINGING_ARMS, Boolean.FALSE);
-	    }
+	public EntityBlockHead(World worldIn) {
+		super(worldIn);
+		this.setCombatTask();
+	}
 
-	    @Override
-		protected SoundEvent getAmbientSound()
-	    {
-	        return SoundEvents.ENTITY_PLAYER_BREATH;
-	    }
+	@SuppressWarnings("unchecked")
+	@Override
+	protected void initEntityAI() {
+		this.tasks.addTask(1, new EntityAISwimming(this));
+		//this.tasks.addTask(2, new EntityAIRestrictSun(this));
+		//this.tasks.addTask(3, new EntityAIFleeSun(this, 1.0D));
+		this.tasks.addTask(2, new EntityAIAvoidEntity(this, EntityCreeper.class, 6.0F, 1.0D, 1.2D));
 
-	    @Override
-		protected SoundEvent getHurtSound()
-	    {
-	        return SoundEvents.ENTITY_PLAYER_HURT;
-	    }
+		this.tasks.addTask(4, new EntityAIWander(this, 1.0D));
+		this.tasks.addTask(5, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		this.tasks.addTask(6, new EntityAILookIdle(this));
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+		//this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityIronGolem.class, true));
+	}
 
-	    @Override
-		protected SoundEvent getDeathSound()
-	    {
-	        return SoundEvents.ENTITY_PLAYER_DEATH;
-	    }
+	@Override
+	protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.20D);
+	}
 
-	    /**
-	     * Get this Entity's EnumCreatureAttribute
-	     */
-	    @Override
-		public EnumCreatureAttribute getCreatureAttribute()
-	    {
-	        return EnumCreatureAttribute.UNDEFINED;
-	    }
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+		this.dataManager.register(SWINGING_ARMS, Boolean.FALSE);
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return SoundEvents.ENTITY_PLAYER_BREATH;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return SoundEvents.ENTITY_PLAYER_HURT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return SoundEvents.ENTITY_PLAYER_DEATH;
+	}
+
+	/**
+	 * Get this Entity's EnumCreatureAttribute
+	 */
+	@Override
+	public EnumCreatureAttribute getCreatureAttribute() {
+		return EnumCreatureAttribute.UNDEFINED;
+	}
 
 
-	    /**
-	     * Handles updating while being ridden by an entity
-	     */
-	    @Override
-		public void updateRidden()
-	    {
-	        super.updateRidden();
+	/**
+	 * Handles updating while being ridden by an entity
+	 */
+	@Override
+	public void updateRidden() {
+		super.updateRidden();
 
-	        if (this.getRidingEntity() instanceof EntityCreature)
-	        {
-	            EntityCreature entitycreature = (EntityCreature)this.getRidingEntity();
-	            this.renderYawOffset = entitycreature.renderYawOffset;
-	        }
-	    }
+		if (this.getRidingEntity() instanceof EntityCreature) {
+			EntityCreature entitycreature = (EntityCreature) this.getRidingEntity();
+			this.renderYawOffset = entitycreature.renderYawOffset;
+		}
+	}
 
-	    /**
-	     * Called only once on an entity when first time spawned, via egg, mob spawner, natural spawning etc, but not called
-	     * when entity is reloaded from nbt. Mainly used for initializing attributes and inventory
-	     */
-	    @Override
-		@Nullable
-	    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
-	    {
-	 
-	    		this.setCombatTask();
-	            this.setEquipmentBasedOnDifficulty(difficulty);
-	            this.setEnchantmentBasedOnDifficulty(difficulty);
+	/**
+	 * Called only once on an entity when first time spawned, via egg, mob spawner, natural spawning etc, but not called
+	 * when entity is reloaded from nbt. Mainly used for initializing attributes and inventory
+	 */
+	@Override
+	@Nullable
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
 
-	        this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * difficulty.getClampedAdditionalDifficulty());
+		this.setCombatTask();
+		this.setEquipmentBasedOnDifficulty(difficulty);
+		this.setEnchantmentBasedOnDifficulty(difficulty);
 
-	        return livingdata;
-	    }
+		this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * difficulty.getClampedAdditionalDifficulty());
 
-	    /**
-	     * sets this entity's combat AI.
-	     */
-	    public void setCombatTask()
-	    {
-	        if (this.world != null && !this.world.isRemote)
-	        {
-	            this.tasks.removeTask(this.aiAttackOnCollide);
-	            this.tasks.removeTask(this.aiArrowAttack);
-	            ItemStack itemstack = this.getHeldItemMainhand();
+		return livingdata;
+	}
 
-	            if (itemstack.getItem() == Items.BOW)
-	            {
-	            	int i = 20;
+	/**
+	 * sets this entity's combat AI.
+	 */
+	public void setCombatTask() {
+		if (this.world != null && !this.world.isRemote) {
+			this.tasks.removeTask(this.aiAttackOnCollide);
+			this.tasks.removeTask(this.aiArrowAttack);
+			ItemStack itemstack = this.getHeldItemMainhand();
 
-	                if (this.world.getDifficulty() != EnumDifficulty.HARD)
-	                {
-	                    i = 40;
-	                }
+			if (itemstack.getItem() == Items.BOW) {
+				int i = 20;
 
-	                this.aiArrowAttack.setAttackCooldown(i);
-	                this.tasks.addTask(3, this.aiArrowAttack);
-	            }
-	            else
-	            {
-	                this.tasks.addTask(3, this.aiAttackOnCollide);
-	            }
-	        }
-	    }
+				if (this.world.getDifficulty() != EnumDifficulty.HARD) {
+					i = 40;
+				}
 
-	    /**
-	     * Attack the specified entity using a ranged attack.
-	     *  
-	     * @param distanceFactor How far the target is, normalized and clamped between 0.1 and 1.0
-	     */
-	    @Override
-		public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor)
-	    {
-	        EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.world, this);
-	        double d0 = target.posX - this.posX;
-	        double d1 = target.getEntityBoundingBox().minY + target.height / 3.0F - entitytippedarrow.posY;
-	        double d2 = target.posZ - this.posZ;
-	        double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
-	        entitytippedarrow.setThrowableHeading(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, 14 - this.world.getDifficulty().getDifficultyId() * 4);
-	        int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
-	        int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
-	        DifficultyInstance difficultyinstance = this.world.getDifficultyForLocation(new BlockPos(this));
-	        entitytippedarrow.setDamage(distanceFactor * 2.0F + this.rand.nextGaussian() * 0.25D + this.world.getDifficulty().getDifficultyId() * 0.11F);
+				this.aiArrowAttack.setAttackCooldown(i);
+				this.tasks.addTask(3, this.aiArrowAttack);
+			} else {
+				this.tasks.addTask(3, this.aiAttackOnCollide);
+			}
+		}
+	}
 
-	        if (i > 0)
-	        {
-	            entitytippedarrow.setDamage(entitytippedarrow.getDamage() + i * 0.5D + 0.5D);
-	        }
+	/**
+	 * Attack the specified entity using a ranged attack.
+	 *
+	 * @param distanceFactor How far the target is, normalized and clamped between 0.1 and 1.0
+	 */
+	@Override
+	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
+		EntityTippedArrow entitytippedarrow = new EntityTippedArrow(this.world, this);
+		double d0 = target.posX - this.posX;
+		double d1 = target.getEntityBoundingBox().minY + target.height / 3.0F - entitytippedarrow.posY;
+		double d2 = target.posZ - this.posZ;
+		double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
+		entitytippedarrow.shoot(d0, d1 + d3 * 0.20000000298023224D, d2, 1.6F, 14 - this.world.getDifficulty().getDifficultyId() * 4);
+		int i = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.POWER, this);
+		int j = EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.PUNCH, this);
+		DifficultyInstance difficultyinstance = this.world.getDifficultyForLocation(new BlockPos(this));
+		entitytippedarrow.setDamage(distanceFactor * 2.0F + this.rand.nextGaussian() * 0.25D + this.world.getDifficulty().getDifficultyId() * 0.11F);
 
-	        if (j > 0)
-	        {
-	            entitytippedarrow.setKnockbackStrength(j);
-	        }
+		if (i > 0) {
+			entitytippedarrow.setDamage(entitytippedarrow.getDamage() + i * 0.5D + 0.5D);
+		}
 
-	        boolean flag = this.isBurning() && difficultyinstance.getAdditionalDifficulty() >= (float)EnumDifficulty.HARD.ordinal() && this.rand.nextBoolean();
-	        flag = flag || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
+		if (j > 0) {
+			entitytippedarrow.setKnockbackStrength(j);
+		}
 
-	        if (flag)
-	        {
-	            entitytippedarrow.setFire(100);
-	        }
+		boolean flag = this.isBurning() && difficultyinstance.getAdditionalDifficulty() >= (float) EnumDifficulty.HARD.ordinal() && this.rand.nextBoolean();
+		flag = flag || EnchantmentHelper.getMaxEnchantmentLevel(Enchantments.FLAME, this) > 0;
 
-	        ItemStack itemstack = this.getHeldItem(EnumHand.OFF_HAND);
+		if (flag) {
+			entitytippedarrow.setFire(100);
+		}
 
-	        if (itemstack.getItem() == Items.TIPPED_ARROW)
-	        {
-	            entitytippedarrow.setPotionEffect(itemstack);
-	        }
+		ItemStack itemstack = this.getHeldItem(EnumHand.OFF_HAND);
 
-	        this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
-	        this.world.spawnEntity(entitytippedarrow);
-	    }
+		if (itemstack.getItem() == Items.TIPPED_ARROW) {
+			entitytippedarrow.setPotionEffect(itemstack);
+		}
 
-	    /**
-	     * (abstract) Protected helper method to read subclass entity data from NBT.
-	     */
-	    @Override
-		public void readEntityFromNBT(NBTTagCompound compound)
-	    {
-	        super.readEntityFromNBT(compound);
+		this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+		this.world.spawnEntity(entitytippedarrow);
+	}
 
-	        this.setCombatTask();
-	    }
+	/**
+	 * (abstract) Protected helper method to read subclass entity data from NBT.
+	 */
+	@Override
+	public void readEntityFromNBT(NBTTagCompound compound) {
+		super.readEntityFromNBT(compound);
 
-	    /**
-	     * (abstract) Protected helper method to write subclass entity data to NBT.
-	     */
-	    @Override
-		public void writeEntityToNBT(NBTTagCompound compound)
-	    {
-	        super.writeEntityToNBT(compound);
-	        
-	    }
+		this.setCombatTask();
+	}
 
-	    @Override
-		public void setItemStackToSlot(EntityEquipmentSlot slotIn, @Nullable ItemStack stack)
-	    {
-	        super.setItemStackToSlot(slotIn, stack);
+	/**
+	 * (abstract) Protected helper method to write subclass entity data to NBT.
+	 */
+	@Override
+	public void writeEntityToNBT(NBTTagCompound compound) {
+		super.writeEntityToNBT(compound);
 
-	        if (!this.world.isRemote && slotIn == EntityEquipmentSlot.MAINHAND)
-	        {
-	            this.setCombatTask();
-	        }
-	    }
+	}
 
-	    @Override
-		public float getEyeHeight()
-	    {
-	        return 1.74F;
-	    }
+	@Override
+	public void setItemStackToSlot(EntityEquipmentSlot slotIn, @Nullable ItemStack stack) {
+		super.setItemStackToSlot(slotIn, stack);
 
-	    /**
-	     * Returns the Y Offset of this entity.
-	     */
-	    @Override
-		public double getYOffset()
-	    {
-	        return -0.35D;
-	    }
+		if (!this.world.isRemote && slotIn == EntityEquipmentSlot.MAINHAND) {
+			this.setCombatTask();
+		}
+	}
 
-	    @SideOnly(Side.CLIENT)
-	    public boolean isSwingingArms()
-	    {
-	        return this.dataManager.get(SWINGING_ARMS);
-	    }
+	@Override
+	public float getEyeHeight() {
+		return 1.74F;
+	}
 
-	    public void setSwingingArms(boolean swingingArms)
-	    {
-	        this.dataManager.set(SWINGING_ARMS, swingingArms);
-	    }
+	/**
+	 * Returns the Y Offset of this entity.
+	 */
+	@Override
+	public double getYOffset() {
+		return -0.35D;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public boolean isSwingingArms() {
+		return this.dataManager.get(SWINGING_ARMS);
+	}
+
+	public void setSwingingArms(boolean swingingArms) {
+		this.dataManager.set(SWINGING_ARMS, swingingArms);
+	}
 
 }

@@ -1,31 +1,13 @@
 package wtf.worldgen.caves;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
-import wtf.worldgen.caves.types.CaveTypeDefault;
-import wtf.worldgen.caves.types.CaveTypeDirtWater;
-import wtf.worldgen.caves.types.CaveTypeFungal;
-import wtf.worldgen.caves.types.CaveTypeHell;
-import wtf.worldgen.caves.types.CaveTypeIce;
-import wtf.worldgen.caves.types.CaveTypeIceRocky;
-import wtf.worldgen.caves.types.CaveTypeJungleVolcano;
-import wtf.worldgen.caves.types.CaveTypeLush;
-import wtf.worldgen.caves.types.CaveTypeMossy;
-import wtf.worldgen.caves.types.CaveTypeMossyRocky;
-import wtf.worldgen.caves.types.CaveTypePaintedDesert;
-import wtf.worldgen.caves.types.CaveTypePodzol;
-import wtf.worldgen.caves.types.CaveTypeRocky;
-import wtf.worldgen.caves.types.CaveTypeRockySandy;
-import wtf.worldgen.caves.types.CaveTypeSandy;
-import wtf.worldgen.caves.types.CaveTypeSandyVolcanic;
-import wtf.worldgen.caves.types.CaveTypeSwamp;
-import wtf.worldgen.caves.types.CaveTypeVolcanic;
-import wtf.worldgen.caves.types.CaveTypeWet;
+import wtf.worldgen.caves.types.*;
 import wtf.worldgen.dungeoncaves.AbstractDungeonType;
 import wtf.worldgen.dungeoncaves.DungeonTypeRegister;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class CaveTypeRegister {
@@ -216,7 +198,6 @@ public class CaveTypeRegister {
 		}
 
 		CaveProfile profile = new CaveProfile(deep, mid, shallow);
-		System.out.println("Setting up cave biomes for " + biome.getBiomeName() + " SHALLOW: " + shallow.name + " MID: " + mid.name + " DEEP: " + deep.name);
 		profile.dungeonDeep = dungeonDeep;
 		profile.dungeonMid = dungeonMid;
 		profile.dungeonShallow = dungeonShallow;

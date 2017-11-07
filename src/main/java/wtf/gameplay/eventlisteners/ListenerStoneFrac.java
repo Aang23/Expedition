@@ -2,6 +2,7 @@ package wtf.gameplay.eventlisteners;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
@@ -37,7 +38,7 @@ public class ListenerStoneFrac {
 					EntityStoneCrack.cracHammer(event.getWorld(), event.getPos(), toolLevel);
 				}
 				if (tool != ItemStack.EMPTY){
-					tool.attemptDamageItem(1, event.getWorld().rand);
+					tool.attemptDamageItem(1, event.getWorld().rand, (EntityPlayerMP) event.getPlayer());
 					event.getPlayer().addStat(StatList.getBlockStats(event.getState().getBlock()));
 					event.getPlayer().addExhaustion(0.025F);
 				}

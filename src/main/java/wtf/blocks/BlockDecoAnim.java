@@ -1,7 +1,5 @@
 package wtf.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
@@ -10,7 +8,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumParticleTypes;
@@ -24,6 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.init.BlockSets;
 import wtf.init.WTFBlocks;
 import wtf.utilities.wrappers.StateAndModifier;
+
+import java.util.Random;
 
 public class BlockDecoAnim extends AbstractBlockDerivative{
 
@@ -151,14 +150,15 @@ public class BlockDecoAnim extends AbstractBlockDerivative{
 			}
 		}
 	}
-	
+
 	@Override
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-		for (int loop = 0; loop < ANIMTYPE.values().length; loop++){
-			list.add(new ItemStack(itemIn, 1, loop));
-		}
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+		if (getCreativeTabToDisplayOn() == itemIn)
+			for (int loop = 0; loop < ANIMTYPE.values().length; loop++){
+				items.add(new ItemStack(this, 1, loop));
+			}
 	}
-	
+
 	@Override
 	public IBlockState getStateFromMeta(int meta)
 	{

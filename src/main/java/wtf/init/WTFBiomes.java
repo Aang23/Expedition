@@ -9,6 +9,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.BiomeManager.BiomeEntry;
 import net.minecraftforge.common.BiomeManager.BiomeType;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import wtf.config.MasterConfig;
 import wtf.config.OverworldGenConfig;
 import wtf.worldgen.caves.CaveTypeRegister;
@@ -80,7 +81,7 @@ public class WTFBiomes {
 		BiomeManager.addBiome(BiomeType.COOL, entry);
 		BiomeManager.removeBiome(BiomeType.COOL, entry);
 		biome.setRegistryName(name);
-		Biome.registerBiome(id, name, biome);
+		ForgeRegistries.BIOMES.register(biome);
 		SubBiomeGenerator.subBiomeRegistry.put((byte)parentBiome, subbiome);
 	}
 	

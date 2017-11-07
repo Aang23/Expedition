@@ -1,11 +1,5 @@
 package wtf.utilities.wrappers;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map.Entry;
-import java.util.Queue;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -15,6 +9,12 @@ import wtf.init.BlockSets;
 import wtf.worldgen.CoreWorldGenListener;
 import wtf.worldgen.generators.queuedgen.QReplaceNoCheck;
 import wtf.worldgen.generators.queuedgen.QueuedGenerator;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Map.Entry;
+import java.util.Queue;
 
 public class BlockMap {
 
@@ -148,7 +148,7 @@ public class BlockMap {
 
 			ExtendedBlockStorage storage = chunk.getBlockStorageArray()[storY];
 			if (storage == Chunk.NULL_BLOCK_STORAGE){
-				storage = new ExtendedBlockStorage(storY << 4, !world.provider.hasNoSky());
+				storage = new ExtendedBlockStorage(storY << 4, world.provider.hasSkyLight());
 				chunk.getBlockStorageArray()[storY] = storage;
 			}
 			return storage; 

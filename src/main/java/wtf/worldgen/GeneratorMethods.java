@@ -1,9 +1,5 @@
 package wtf.worldgen;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Random;
-
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -16,10 +12,10 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import wtf.blocks.BlockRoots;
-import wtf.blocks.BlockSpeleothem;
 import wtf.blocks.BlockIcicle.IcicleType;
+import wtf.blocks.BlockRoots;
 import wtf.blocks.BlockRoots.RootType;
+import wtf.blocks.BlockSpeleothem;
 import wtf.blocks.BlockSpeleothem.SpType;
 import wtf.config.CaveBiomesConfig;
 import wtf.init.BlockSets;
@@ -27,12 +23,11 @@ import wtf.init.WTFBlocks;
 import wtf.utilities.wrappers.BlockMap;
 import wtf.utilities.wrappers.ChunkCoords;
 import wtf.utilities.wrappers.StateAndModifier;
-import wtf.worldgen.generators.queuedgen.QMobSpawner;
-import wtf.worldgen.generators.queuedgen.QModify;
-import wtf.worldgen.generators.queuedgen.QOreGen;
-import wtf.worldgen.generators.queuedgen.QReplace;
-import wtf.worldgen.generators.queuedgen.QReplaceNoCheck;
-import wtf.worldgen.generators.queuedgen.QTreeReplace;
+import wtf.worldgen.generators.queuedgen.*;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Random;
 
 
 public class GeneratorMethods{
@@ -300,9 +295,9 @@ public class GeneratorMethods{
             replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.acacia));
         } else if (BiomeDictionary.getTypes(biome).contains(Type.JUNGLE)) {
             replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.jungle));
-        } else if (biome.getBiomeName().contains("ark")) {
+		} else if (BiomeDictionary.getTypes(biome).stream().anyMatch(type -> type.getName().contains("ark"))) {
             replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.big_oak));
-        } else if (biome.getBiomeName().contains("irch")) {
+		} else if (BiomeDictionary.getTypes(biome).stream().anyMatch(type -> type.getName().contains("irch"))) {
             replaceBlock(pos, WTFBlocks.roots.getDefaultState().withProperty(BlockRoots.TYPE, RootType.birch));
         } else {
             replaceBlock(pos, WTFBlocks.roots.getDefaultState());

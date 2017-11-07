@@ -31,12 +31,13 @@ public class MultiThreadScanner implements Runnable{
 	public void run() {
 		WorldScanner scanner;
 		switch (world.provider.getDimensionType()) {
-			case NETHER:
-				scanner = new NetherScanner();
-				break;
 			case OVERWORLD:
 				scanner = new WorldScanner();
 				break;
+			case NETHER:
+				return;
+				//scanner = new NetherScanner();
+				//break;
 			case THE_END:
 				return;
 			default:

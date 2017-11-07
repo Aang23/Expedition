@@ -1,10 +1,10 @@
 package wtf.init;
 
-import net.minecraftforge.fml.common.registry.ExistingSubstitutionException;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.init.Blocks;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import wtf.blocks.substitution.BlockWTFTorch;
-import wtf.config.MasterConfig;
 import wtf.config.GameplayConfig;
+import wtf.config.MasterConfig;
 
 public class WTFSubstitutions {
 	
@@ -13,19 +13,11 @@ public class WTFSubstitutions {
 		BlockWTFTorch.torch_on = WTFBlocks.registerBlock(new BlockWTFTorch(true), "torch_on");
 		
 		if (MasterConfig.gameplaytweaks && GameplayConfig.replaceTorch){
-			
-			
 
-			System.out.println("Attempting torch replacement");
-			try {
-				GameRegistry.addSubstitutionAlias("minecraft:torch", GameRegistry.Type.BLOCK, BlockWTFTorch.torch_off);
-
-			} catch (ExistingSubstitutionException e) {
-				e.printStackTrace();
-			}
-
-			BlockWTFTorch.torch_off.setRegistryName("torch");
 			BlockWTFTorch.torch_off.setUnlocalizedName("torch");
+			System.out.println("Attempting torch replacement");
+			ForgeRegistries.BLOCKS.register(new BlockWTFTorch(false).setRegistryName(Blocks.TORCH.getRegistryName()));
+
 		}
 		
 		/*

@@ -1,6 +1,5 @@
 package wtf.blocks;
 
-import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -8,7 +7,6 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
@@ -19,6 +17,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import wtf.init.WTFBlocks;
+
+import javax.annotation.Nullable;
 
 
 public class BlockSpeleothem extends AbstractBlockDerivative{
@@ -125,10 +125,11 @@ public class BlockSpeleothem extends AbstractBlockDerivative{
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> list) {
-		for (int loop = 0; loop < SpType.values().length; loop++){
-			list.add(new ItemStack(itemIn, 1, loop));
-		}
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+		if (getCreativeTabToDisplayOn() == itemIn)
+			for (int loop = 0; loop < SpType.values().length; loop++){
+				items.add(new ItemStack(this, 1, loop));
+			}
 	}
 
 	@Override

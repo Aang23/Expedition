@@ -1,13 +1,13 @@
 package wtf.entities.customentities;
 
-import java.util.Random;
-
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Random;
 
 public class EntityFlyingFlame extends EntityBat{
 
@@ -32,10 +32,9 @@ public class EntityFlyingFlame extends EntityBat{
        // this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.15D);
         
     }
-	
+
     @Override
-	public float getBrightness(float partialTicks)
-    {
+    public float getBrightness() {
         return 1.0F;
     }
 

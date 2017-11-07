@@ -1,12 +1,5 @@
 package wtf.gameplay;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentProtection;
@@ -26,6 +19,8 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import wtf.config.GameplayConfig;
 import wtf.utilities.wrappers.ExpVec;
+
+import java.util.*;
 
 public class CustomExplosion extends Explosion{
 
@@ -47,25 +42,25 @@ public class CustomExplosion extends Explosion{
 	protected Map<Entity, Vec3d> affectedPlayers = new HashMap<>();
 
 	public CustomExplosion(Entity entity, World world, Vec3d vec3d, float str) {
-		super(world, entity, vec3d.xCoord, vec3d.yCoord, vec3d.zCoord, str, false, false);
+		super(world, entity, vec3d.x, vec3d.y, vec3d.z, str, false, false);
 		this.world = world;
-		BlockPos origin = new BlockPos(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+		BlockPos origin = new BlockPos(vec3d.x, vec3d.y, vec3d.z);
 		this.sourceEntity = entity;
 		this.counterMod = 0;
-		populateVectorList(new BlockPos(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord), str);
+		populateVectorList(new BlockPos(vec3d.x, vec3d.y, vec3d.z), str);
 		doExplosionB(origin, str);
 
 	}
 	
 	public CustomExplosion(Entity entity, World world, Vec3d vec3d, float str, boolean fire) {
-		super(world, entity, vec3d.xCoord, vec3d.yCoord, vec3d.zCoord, str, false, false);
+		super(world, entity, vec3d.x, vec3d.y, vec3d.z, str, false, false);
 		flaming = fire;
 		isSmoking = fire;
 		this.world = world;
-		BlockPos origin = new BlockPos(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord);
+		BlockPos origin = new BlockPos(vec3d.x, vec3d.y, vec3d.z);
 		this.sourceEntity = entity;
 		this.counterMod = 0;
-		populateVectorList(new BlockPos(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord), str);
+		populateVectorList(new BlockPos(vec3d.x, vec3d.y, vec3d.z), str);
 		doExplosionB(origin, str);
 		
 		
